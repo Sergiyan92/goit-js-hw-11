@@ -8,11 +8,11 @@ const input = document.querySelector('[name="searchQuery"]');
 const gallery = document.querySelector('.gallery');
 const btnSubmit = document.querySelector('.submit');
 const btnLoadMore = document.querySelector('.load-more');
-btnLoadMore.addEventListener('click', handleLoadMore);
-function handleLoadMore() {
-  page += 1;
-  getData(input.value, { page });
-}
+// btnLoadMore.addEventListener('click', handleLoadMore);
+// function handleLoadMore() {
+//   page += 1;
+//   getData(input.value, { page });
+// }
 const Lightbox = new SimpleLightbox('.gallery__link', {
   captionsData: 'alt',
   captionsData: 250,
