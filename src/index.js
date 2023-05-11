@@ -3,16 +3,21 @@ import axios from 'axios';
 import { getData } from './appi';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+let searchQuery = '';
+let page = 1;
 const Form = document.querySelector('#search-form');
 const input = document.querySelector('[name="searchQuery"]');
 const gallery = document.querySelector('.gallery');
 const btnSubmit = document.querySelector('.submit');
 const btnLoadMore = document.querySelector('.load-more');
-// btnLoadMore.addEventListener('click', handleLoadMore);
-// function handleLoadMore() {
-//   page += 1;
-//   getData(input.value, { page });
-// }
+
+btnLoadMore.addEventListener('click', handleLoadMore);
+async function handleLoadMore() {
+  page += 1;
+
+  const data = await getData(searchQuery, page);
+  createCard(data);
+}
 const Lightbox = new SimpleLightbox('.gallery__link', {
   captionsData: 'alt',
   captionsData: 250,
@@ -20,10 +25,10 @@ const Lightbox = new SimpleLightbox('.gallery__link', {
 
 Form.addEventListener('submit', async e => {
   e.preventDefault();
-  const searchQuery = input.value.trim();
+  searchQuery = input.value.trim();
   if (!searchQuery) return;
   const data = await getData(input.value);
-
+  page = 1;
   createCard(data);
 });
 
@@ -33,7 +38,7 @@ const createCard = data => {
       card =>
         `<a class="gallery__link" href="${card.largeImageURL}" >
         <div class="photo-card">
-           <img  class='gallery__image' src=${card.webformatURL} alt=${card.tags} title=${card.tags} loading="lazy" width='250' height = '100' />
+           <img  class='gallery__image' src=${card.webformatURL} alt=${card.tags} title=${card.tags} loading="lazy" width='250' height = '150' />
              <div class="info">
             <p class="info-item">
                <b>Likes <span>${card.likes}</span></b>
@@ -54,7 +59,10 @@ const createCard = data => {
     `
     )
     .join('');
-
-  gallery.innerHTML = li;
+  if (page > 1) {
+    gallery.insertAdjacentHTML('beforeend', li);
+  } else {
+    gallery.innerHTML = li;
+  }
   Lightbox.refresh();
 };
