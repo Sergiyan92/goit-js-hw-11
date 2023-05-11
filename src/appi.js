@@ -23,17 +23,20 @@ export async function getData(searchQuery, page = 1) {
 
     if (data.hits.length === 0) {
       btnLoadMore.style.display = 'none';
-      Notify.info(
+      Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
       return [];
     }
-    if (data.hits.length < 40) {
+    if (data.totalHits < 40) {
       btnLoadMore.style.display = 'none';
       Notify.info(`We're sorry, but you've reached the end of search results.`);
     }
     if (data.hits.length === 40) {
       btnLoadMore.style.display = 'flex';
+    }
+    if (data.totalHits > 40) {
+      Notify.success(`You laki ${data.totalHits} images searches`);
     }
     return data.hits;
   } catch (error) {

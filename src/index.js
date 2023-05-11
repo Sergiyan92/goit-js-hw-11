@@ -16,7 +16,11 @@ async function handleLoadMore() {
   page += 1;
   const data = await getData(searchQuery, page);
   createCard(data);
-  // if(page * 40 >= res.totalHits)
+  // if (page * 40 >= res.totalHits) {
+  //   Notify.info(
+  //     'Sorry, there are no images matching your search query. Please try again.'
+  //   );
+  // }
 }
 const Lightbox = new SimpleLightbox('.gallery__link', {
   captionsData: 'alt',
@@ -26,7 +30,12 @@ const Lightbox = new SimpleLightbox('.gallery__link', {
 Form.addEventListener('submit', async e => {
   e.preventDefault();
   searchQuery = input.value.trim();
-  if (!searchQuery) return;
+  if (!searchQuery) {
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+    return;
+  }
   const data = await getData(input.value);
   page = 1;
   createCard(data);
