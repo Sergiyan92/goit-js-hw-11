@@ -1,0 +1,16 @@
+.load-more {
+  display: none;
+  margin: auto;
+}
+.gallery {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: aqua;
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
