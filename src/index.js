@@ -14,9 +14,9 @@ const btnLoadMore = document.querySelector('.load-more');
 btnLoadMore.addEventListener('click', handleLoadMore);
 async function handleLoadMore() {
   page += 1;
-
   const data = await getData(searchQuery, page);
   createCard(data);
+  // if(page * 40 >= res.totalHits)
 }
 const Lightbox = new SimpleLightbox('.gallery__link', {
   captionsData: 'alt',

@@ -28,6 +28,10 @@ export async function getData(searchQuery, page = 1) {
       );
       return [];
     }
+    if (data.hits.length < 40) {
+      btnLoadMore.style.display = 'none';
+      Notify.info(`We're sorry, but you've reached the end of search results.`);
+    }
     if (data.hits.length === 40) {
       btnLoadMore.style.display = 'flex';
     }
